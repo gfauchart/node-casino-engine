@@ -79,3 +79,15 @@ test('Roulette Engine spin should return only 1 win when betting on red, black a
   expect(winningBets).toHaveLength(1);
   expect(lostBets).toHaveLength(2);
 });
+
+test('Roulette Engine playing on all number should make you loose 1 of balance', () => {
+  const engine = new RouletteEngine();
+
+  engine.registerPlayer({playerId, balance: 100 })
+  for (var i = 0; i <= 36; i++)  {
+    engine.placeBet(playerId, {type : SlotBetType.Straight, value: i, amount: 1})
+  }
+  const { players, bets } = engine.spin();
+
+  expect(players[0].balance).toBe(99);
+});

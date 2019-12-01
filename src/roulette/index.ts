@@ -119,7 +119,7 @@ export default class RouletteEngine {
   }
 
   public placeBet(playerId: string, bet : RouletteSlotBet) : RouletteEngine {
-    var multiplier = 2;
+    var multiplier = 1;
     const player = this.players.find(p => p.playerId == playerId);
 
     if (!player) {
@@ -137,12 +137,12 @@ export default class RouletteEngine {
       multiplier = 35;
     } else if (bet.type === SlotBetType.Red || bet.type === SlotBetType.Black) {
       winningSlots = Wheel.filter(w => w.color === (bet.type === SlotBetType.Red ? SlotColor.Red : SlotColor.Black));
-      multiplier = 2;
+      multiplier = 1;
     } else if (bet.type === SlotBetType.Odd || bet.type === SlotBetType.Even) {
       winningSlots = Wheel
         .filter(w => w.number !== 0)
         .filter(w => w.number % 2 === (bet.type === SlotBetType.Odd ? 0 : 1));
-      multiplier = 2;
+      multiplier = 1;
     } else {
       throw new Error(`invalid bet`);
     }
@@ -156,7 +156,7 @@ export default class RouletteEngine {
       playerId,
       amount: bet.amount,
       winningSlots,
-      multiplier: 2,
+      multiplier,
     })
 
     return this;
@@ -172,6 +172,12 @@ export default class RouletteEngine {
 
     this.bets.forEach(b => {
       b.won = !!b.winningSlots.find(s => s.number === draft.number);
+      if (b.won) {
+        const player = this.players.find(p => p.playerId === b.playerId);
+        if (player) {
+          player.balance += (b.amount + (b.amount * b.multiplier));
+        }
+      }
     })
 
     return {

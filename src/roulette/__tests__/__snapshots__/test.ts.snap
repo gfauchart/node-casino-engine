@@ -4,7 +4,7 @@ exports[`Roulette Engine spin should return bets 1`] = `
 Array [
   Object {
     "amount": 5,
-    "multiplier": 2,
+    "multiplier": 1,
     "playerId": "112233",
     "winningSlots": Array [
       Object {
@@ -83,7 +83,7 @@ Array [
   },
   Object {
     "amount": 5,
-    "multiplier": 2,
+    "multiplier": 1,
     "playerId": "112233",
     "winningSlots": Array [
       Object {
@@ -167,7 +167,7 @@ exports[`Roulette Engine spin should return bets 2`] = `
 Array [
   Object {
     "amount": 5,
-    "multiplier": 2,
+    "multiplier": 1,
     "playerId": "112233",
     "winningSlots": Array [
       Object {
@@ -246,7 +246,7 @@ Array [
   },
   Object {
     "amount": 5,
-    "multiplier": 2,
+    "multiplier": 1,
     "playerId": "112233",
     "winningSlots": Array [
       Object {

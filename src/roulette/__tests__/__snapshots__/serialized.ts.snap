@@ -4,7 +4,7 @@ exports[`Roulette Engine 1`] = `
 Array [
   Object {
     "amount": 2,
-    "multiplier": 2,
+    "multiplier": 35,
     "playerId": "112233",
     "winningSlots": Array [
       Object {
