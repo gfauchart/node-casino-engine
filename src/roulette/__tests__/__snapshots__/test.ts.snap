@@ -1,0 +1,327 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Roulette Engine spin should return bets 1`] = `
+Array [
+  Object {
+    "amount": 5,
+    "multiplier": 2,
+    "playerId": "112233",
+    "winningSlots": Array [
+      Object {
+        "color": 1,
+        "number": 2,
+      },
+      Object {
+        "color": 1,
+        "number": 4,
+      },
+      Object {
+        "color": 1,
+        "number": 6,
+      },
+      Object {
+        "color": 1,
+        "number": 8,
+      },
+      Object {
+        "color": 1,
+        "number": 10,
+      },
+      Object {
+        "color": 0,
+        "number": 12,
+      },
+      Object {
+        "color": 0,
+        "number": 14,
+      },
+      Object {
+        "color": 0,
+        "number": 16,
+      },
+      Object {
+        "color": 0,
+        "number": 18,
+      },
+      Object {
+        "color": 1,
+        "number": 20,
+      },
+      Object {
+        "color": 1,
+        "number": 22,
+      },
+      Object {
+        "color": 1,
+        "number": 24,
+      },
+      Object {
+        "color": 1,
+        "number": 26,
+      },
+      Object {
+        "color": 1,
+        "number": 28,
+      },
+      Object {
+        "color": 0,
+        "number": 30,
+      },
+      Object {
+        "color": 0,
+        "number": 32,
+      },
+      Object {
+        "color": 0,
+        "number": 34,
+      },
+      Object {
+        "color": 0,
+        "number": 36,
+      },
+    ],
+  },
+  Object {
+    "amount": 5,
+    "multiplier": 2,
+    "playerId": "112233",
+    "winningSlots": Array [
+      Object {
+        "color": 0,
+        "number": 1,
+      },
+      Object {
+        "color": 0,
+        "number": 3,
+      },
+      Object {
+        "color": 0,
+        "number": 5,
+      },
+      Object {
+        "color": 0,
+        "number": 7,
+      },
+      Object {
+        "color": 0,
+        "number": 9,
+      },
+      Object {
+        "color": 1,
+        "number": 11,
+      },
+      Object {
+        "color": 1,
+        "number": 13,
+      },
+      Object {
+        "color": 1,
+        "number": 15,
+      },
+      Object {
+        "color": 1,
+        "number": 17,
+      },
+      Object {
+        "color": 0,
+        "number": 19,
+      },
+      Object {
+        "color": 0,
+        "number": 21,
+      },
+      Object {
+        "color": 0,
+        "number": 23,
+      },
+      Object {
+        "color": 0,
+        "number": 25,
+      },
+      Object {
+        "color": 0,
+        "number": 27,
+      },
+      Object {
+        "color": 1,
+        "number": 29,
+      },
+      Object {
+        "color": 1,
+        "number": 31,
+      },
+      Object {
+        "color": 1,
+        "number": 33,
+      },
+      Object {
+        "color": 1,
+        "number": 35,
+      },
+    ],
+  },
+]
+`;
+
+exports[`Roulette Engine spin should return bets 2`] = `
+Array [
+  Object {
+    "amount": 5,
+    "multiplier": 2,
+    "playerId": "112233",
+    "winningSlots": Array [
+      Object {
+        "color": 0,
+        "number": 1,
+      },
+      Object {
+        "color": 0,
+        "number": 3,
+      },
+      Object {
+        "color": 0,
+        "number": 5,
+      },
+      Object {
+        "color": 0,
+        "number": 7,
+      },
+      Object {
+        "color": 0,
+        "number": 9,
+      },
+      Object {
+        "color": 0,
+        "number": 12,
+      },
+      Object {
+        "color": 0,
+        "number": 14,
+      },
+      Object {
+        "color": 0,
+        "number": 16,
+      },
+      Object {
+        "color": 0,
+        "number": 18,
+      },
+      Object {
+        "color": 0,
+        "number": 19,
+      },
+      Object {
+        "color": 0,
+        "number": 21,
+      },
+      Object {
+        "color": 0,
+        "number": 23,
+      },
+      Object {
+        "color": 0,
+        "number": 25,
+      },
+      Object {
+        "color": 0,
+        "number": 27,
+      },
+      Object {
+        "color": 0,
+        "number": 30,
+      },
+      Object {
+        "color": 0,
+        "number": 32,
+      },
+      Object {
+        "color": 0,
+        "number": 34,
+      },
+      Object {
+        "color": 0,
+        "number": 36,
+      },
+    ],
+  },
+  Object {
+    "amount": 5,
+    "multiplier": 2,
+    "playerId": "112233",
+    "winningSlots": Array [
+      Object {
+        "color": 1,
+        "number": 2,
+      },
+      Object {
+        "color": 1,
+        "number": 4,
+      },
+      Object {
+        "color": 1,
+        "number": 6,
+      },
+      Object {
+        "color": 1,
+        "number": 8,
+      },
+      Object {
+        "color": 1,
+        "number": 10,
+      },
+      Object {
+        "color": 1,
+        "number": 11,
+      },
+      Object {
+        "color": 1,
+        "number": 13,
+      },
+      Object {
+        "color": 1,
+        "number": 15,
+      },
+      Object {
+        "color": 1,
+        "number": 17,
+      },
+      Object {
+        "color": 1,
+        "number": 20,
+      },
+      Object {
+        "color": 1,
+        "number": 22,
+      },
+      Object {
+        "color": 1,
+        "number": 24,
+      },
+      Object {
+        "color": 1,
+        "number": 26,
+      },
+      Object {
+        "color": 1,
+        "number": 28,
+      },
+      Object {
+        "color": 1,
+        "number": 29,
+      },
+      Object {
+        "color": 1,
+        "number": 31,
+      },
+      Object {
+        "color": 1,
+        "number": 33,
+      },
+      Object {
+        "color": 1,
+        "number": 35,
+      },
+    ],
+  },
+]
+`;
