@@ -166,6 +166,10 @@ export default class RouletteEngine {
     return this.bets;
   }
 
+  public getPlayers() : RoulettePlayer[] {
+    return this.players;
+  }
+
 
   public spin() : RouletteResult {
     const draft : RouletteSlot = Wheel[Math.floor(Wheel.length * Math.random())];
@@ -190,7 +194,7 @@ export default class RouletteEngine {
 
   public serialize() : string {
     const payload = JSON.stringify({
-       player: this.players,
+       players: this.players,
        bets: this.bets,
     });
     return LZUTF8.compress(payload, { outputEncoding : "Base64" });

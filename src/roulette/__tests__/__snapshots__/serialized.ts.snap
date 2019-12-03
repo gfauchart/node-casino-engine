@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Roulette Engine 1`] = `
+exports[`Roulette Engine serialize should remenber bets 1`] = `
 Array [
   Object {
     "amount": 2,
@@ -12,6 +12,15 @@ Array [
         "number": 2,
       },
     ],
+  },
+]
+`;
+
+exports[`Roulette Engine serialize should remenber players 1`] = `
+Array [
+  Object {
+    "balance": 108,
+    "playerId": "112233",
   },
 ]
 `;
