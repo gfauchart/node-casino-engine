@@ -1,4 +1,4 @@
-import BlackjackEngine, { EngineState } from '../index';
+import BlackjackEngine, { EngineState, BlackjackActions } from '../index';
 
 test('BlackJack Engine should throw when player do not deposit enough', () => {
   const engine = new BlackjackEngine();
@@ -48,15 +48,61 @@ test('BlackJack Engine should throw dealing twice', () => {
   }).toThrowError(/already dealt/i);
 });
 
-// test('BlackJack Engine should being able to deal', () => {
-//   const engine = new BlackjackEngine();
-//
-//   engine
-//     .deposit(200)
-//     .placeBet(50)
-//     .deal()
-//
-//   engine.action()
-//
-//   expect(bets[0].cards).toHaveLength(2);
-// });
+test('BlackJack Engine should being to stand to end the game', () => {
+  const engine = new BlackjackEngine();
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .placeBet(40)
+    .deal()
+
+  engine.action(BlackjackActions.STAND);
+  const results = engine.action(BlackjackActions.STAND);
+
+  expect(results.state).toBe(EngineState.DONE);
+});
+
+test('BlackJack Engine should stay in progress while game is not over', () => {
+  const engine = new BlackjackEngine();
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .placeBet(40)
+    .deal()
+
+  const results = engine.action(BlackjackActions.STAND);
+
+  expect(results.state).toBe(EngineState.PLAYING);
+});
+
+test('BlackJack Engine should finish bet when using double', () => {
+  const engine = new BlackjackEngine();
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .placeBet(40)
+    .deal()
+
+  engine.action(BlackjackActions.DOUBLE);
+  const results = engine.action(BlackjackActions.DOUBLE);
+
+  expect(results.state).toBe(EngineState.DONE);
+});
+
+test('BlackJack double should decrese the player balance', () => {
+  const engine = new BlackjackEngine();
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .placeBet(40)
+    .deal()
+
+  const results = engine.action(BlackjackActions.DOUBLE);
+
+  expect(results.state).toBe(EngineState.PLAYING);
+  expect(results.balance).toBe(100);
+});
