@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlackJack Engine should being able to place bets 1`] = `
+Array [
+  Object {
+    "amount": 100,
+    "cards": Array [],
+    "completed": false,
+    "count": Array [
+      0,
+    ],
+  },
+  Object {
+    "amount": 50,
+    "cards": Array [],
+    "completed": false,
+    "count": Array [
+      0,
+    ],
+  },
+]
+`;
