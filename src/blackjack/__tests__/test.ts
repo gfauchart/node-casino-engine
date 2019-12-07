@@ -1,5 +1,26 @@
 import BlackjackEngine, { EngineState, BlackjackActions } from '../index';
 
+import { ICardPicker, CardsEmum, Card } from '../deck';
+
+const CARD_KING = {name: CardsEmum.KING, values: [10]};
+const CARD_AS  = {name: CardsEmum.AS, values: [1, 11]};
+const CARD_SEVEN  = {name: CardsEmum.SEVEN, values: [7]};
+
+export class MockSequenceCardPicker implements ICardPicker {
+  private idx_seq: number = 0;
+
+  constructor(private seq: Card[]) {}
+
+  getCards() {
+    return [];
+  }
+  setCards() {}
+
+  dealCard() {
+    return this.seq[(this.idx_seq++) % this.seq.length];
+  }
+}
+
 test('BlackJack Engine should throw when player do not deposit enough', () => {
   const engine = new BlackjackEngine();
   expect(() =>
@@ -48,8 +69,46 @@ test('BlackJack Engine should throw dealing twice', () => {
   }).toThrowError(/already dealt/i);
 });
 
+test('BlackJack Engine should deal 1 card to the dealer and 2 to each player', () => {
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING,
+  ]));
+
+  const {houseHand, bets} = engine
+    .deposit(200)
+    .placeBet(30)
+    .placeBet(40)
+    .deal()
+
+
+  expect(houseHand.cards).toHaveLength(1);
+  bets.forEach(bet => {
+    expect(bet.cards).toHaveLength(2);
+  });
+
+});
+
+test('BlackJack Engine should make player win without playing if he blackjack', () => {
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING, // house
+
+    CARD_AS, //player card 1
+    CARD_KING, //player card 2
+  ]));
+
+  const results = engine
+    .deposit(200)
+    .placeBet(30)
+    .deal()
+
+  expect(results.state).toBe(EngineState.DONE);
+  expect(results.balance).toBe(245);
+});
+
 test('BlackJack Engine should being to stand to end the game', () => {
-  const engine = new BlackjackEngine();
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING,
+  ]));
 
   engine
     .deposit(200)
@@ -64,7 +123,9 @@ test('BlackJack Engine should being to stand to end the game', () => {
 });
 
 test('BlackJack Engine should stay in progress while game is not over', () => {
-  const engine = new BlackjackEngine();
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING,
+  ]));
 
   engine
     .deposit(200)
@@ -78,7 +139,9 @@ test('BlackJack Engine should stay in progress while game is not over', () => {
 });
 
 test('BlackJack Engine should finish bet when using double', () => {
-  const engine = new BlackjackEngine();
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING,
+  ]));
 
   engine
     .deposit(200)
@@ -92,8 +155,10 @@ test('BlackJack Engine should finish bet when using double', () => {
   expect(results.state).toBe(EngineState.DONE);
 });
 
-test('BlackJack double should decrese the player balance', () => {
-  const engine = new BlackjackEngine();
+test('BlackJack double should decrease the player balance', () => {
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_KING,
+  ]));
 
   engine
     .deposit(200)

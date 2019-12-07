@@ -33,6 +33,7 @@ interface BlackjackBet {
 
 interface BlackjackGameState {
   state : EngineState;
+  houseHand: BlackjackBet;
   bets : BlackjackBet[];
   currentBet?: BlackjackBet;
   balance : number;
@@ -118,6 +119,7 @@ export default class BlackjackEngine {
 
   getState() : BlackjackGameState {
     return {
+      houseHand: this.houseHand,
       state: this.state,
       bets: this.bets,
       currentBet: this.getCurrentBet(),
@@ -128,26 +130,31 @@ export default class BlackjackEngine {
   deal() : BlackjackGameState {
     if (this.state === EngineState.BETTING) {
 
+      let houseHand = this.houseHand;
+      houseHand.cards.push(this.picker.dealCard());
+      houseHand.count = getCardsCount(houseHand.cards);
+
       this.bets.forEach((bet) => {
         bet.cards.push(this.picker.dealCard());
         bet.cards.push(this.picker.dealCard());
 
         bet.count = getCardsCount(bet.cards);
+        if (bet.count.indexOf(21) >= 0) {
+          bet.completed = true;
+          bet.won = BlackjackWonState.WON;
+          this.balance += (bet.amount) + ((bet.amount) * 1.5)
+        }
       })
 
       this.state = EngineState.PLAYING;
     } else {
       throw new Error('game is already dealt');
     }
+    this.finaliseGameIfNeeded(); // all player could blackjack
     return this.getState();
   }
 
   action(name: BlackjackActions) {
-
-    // HIT,
-    // STAND,
-    // DOUBLE,
-    // SPLIT,
 
     const currentBet = this.getCurrentBet();
     if (currentBet && this.state === EngineState.PLAYING) {
@@ -201,10 +208,6 @@ export default class BlackjackEngine {
       this.state = EngineState.DONE;
 
       let houseHand = this.houseHand;
-      houseHand.cards.push(this.picker.dealCard());
-      houseHand.cards.push(this.picker.dealCard());
-
-      houseHand.count = getCardsCount(houseHand.cards);
 
       while (houseHand.count[houseHand.count.length - 1] < 16) {
         houseHand.cards.push(this.picker.dealCard());
