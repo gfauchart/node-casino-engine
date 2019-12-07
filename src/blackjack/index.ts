@@ -1,42 +1,6 @@
 import LZUTF8  from 'lzutf8'
-import { shuffle, getCardsCount } from './helpers';
-
-export enum CardsEmum {
-  AS = "AS",
-  TWO = "TWO",
-  THREE = "THREE",
-  FOUR = "FOUR",
-  FIVE = "FIVE",
-  SIX = "SIX",
-  SEVEN = "SEVEN",
-  EIGHT = "EIGHT",
-  NINE = "NINE",
-  TEN = "TEN",
-  JACK = "JACK",
-  QUEEN = "QUEEN",
-  KING = "KING",
-}
-
-interface Card {
-  name: CardsEmum;
-  values: number[];
-}
-
-const DefaultCardsList = [
-  { name : CardsEmum.AS,    values: [1,11] },
-  { name : CardsEmum.TWO,   values: [2] },
-  { name : CardsEmum.THREE, values: [3] },
-  { name : CardsEmum.FOUR,  values: [4] },
-  { name : CardsEmum.FIVE,  values: [5] },
-  { name : CardsEmum.SIX,   values: [6] },
-  { name : CardsEmum.SEVEN, values: [7] },
-  { name : CardsEmum.EIGHT, values: [8] },
-  { name : CardsEmum.NINE,  values: [9] },
-  { name : CardsEmum.TEN,   values: [10] },
-  { name : CardsEmum.JACK,  values: [10] },
-  { name : CardsEmum.QUEEN, values: [10] },
-  { name : CardsEmum.KING,  values: [10] },
-]
+import { getCardsCount } from './helpers';
+import CardPicker, { ICardPicker, Card }  from './deck';
 
 export enum EngineState {
   BETTING = 0,
@@ -77,10 +41,10 @@ interface BlackjackGameState {
 
 export default class BlackjackEngine {
 
-  private cards: Card[];
   private state = EngineState.BETTING;
   private bets : BlackjackBet[] = []
   private balance : number = 0;
+  private picker : ICardPicker;
 
   private houseHand : BlackjackBet = {
     cards: [],
@@ -91,7 +55,8 @@ export default class BlackjackEngine {
     amount: 0,
   }
 
-  constructor(serialized? : string) {
+  constructor(serialized? : string, pickerInstance : ICardPicker = new CardPicker()) {
+    this.picker = pickerInstance;
     if (serialized) {
       const decompressed = LZUTF8.decompress(serialized, {
         inputEncoding : "Base64",
@@ -106,20 +71,13 @@ export default class BlackjackEngine {
         houseHand
       } = JSON.parse(decompressed);
 
-      this.cards = cards;
+      this.picker.setCards(cards);
       this.state = state;
       this.bets = bets;
       this.balance = balance;
       this.houseHand = houseHand;
     }
 
-    var cards : Card[] = [];
-    const NUMBER_OF_DECK = 16;
-    for (var i = 0; i < NUMBER_OF_DECK; i++) {
-      cards = cards.concat(DefaultCardsList)
-    }
-
-    this.cards = shuffle(cards);
   }
 
   deposit(newBalance: number) : BlackjackEngine {
@@ -167,20 +125,12 @@ export default class BlackjackEngine {
     }
   }
 
-  private dealCard() : Card {
-    const idx = Math.floor(Math.random()*this.cards.length);
-    const card = this.cards[idx];
-    this.cards.splice(idx, 1);
-
-    return card;
-  }
-
   deal() : BlackjackGameState {
     if (this.state === EngineState.BETTING) {
 
       this.bets.forEach((bet) => {
-        bet.cards.push(this.dealCard());
-        bet.cards.push(this.dealCard());
+        bet.cards.push(this.picker.dealCard());
+        bet.cards.push(this.picker.dealCard());
 
         bet.count = getCardsCount(bet.cards);
       })
@@ -205,14 +155,14 @@ export default class BlackjackEngine {
       if (name === BlackjackActions.STAND) {
         currentBet.completed = true;
       } else if (name === BlackjackActions.HIT) {
-        currentBet.cards.push(this.dealCard());
+        currentBet.cards.push(this.picker.dealCard());
       } else if (name === BlackjackActions.DOUBLE) {
         if (currentBet.amount > this.balance) {
           throw new Error('double is not allowed');
         }
         this.balance -= currentBet.amount;
         currentBet.amount *= 2;
-        currentBet.cards.push(this.dealCard());
+        currentBet.cards.push(this.picker.dealCard());
         currentBet.completed = true;
       } else {
         throw new Error('uknown action');
@@ -251,13 +201,13 @@ export default class BlackjackEngine {
       this.state = EngineState.DONE;
 
       let houseHand = this.houseHand;
-      houseHand.cards.push(this.dealCard());
-      houseHand.cards.push(this.dealCard());
+      houseHand.cards.push(this.picker.dealCard());
+      houseHand.cards.push(this.picker.dealCard());
 
       houseHand.count = getCardsCount(houseHand.cards);
 
       while (houseHand.count[houseHand.count.length - 1] < 16) {
-        houseHand.cards.push(this.dealCard());
+        houseHand.cards.push(this.picker.dealCard());
         houseHand.count = getCardsCount(houseHand.cards);
       }
 
@@ -293,7 +243,7 @@ export default class BlackjackEngine {
 
   public serialize() : string {
     const payload = JSON.stringify({
-       cards: this.cards,
+       cards: this.picker.getCards(),
        state: this.state,
        bets: this.bets,
        balance: this.balance,
