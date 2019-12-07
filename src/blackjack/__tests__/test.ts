@@ -5,6 +5,7 @@ import { ICardPicker, CardsEmum, Card } from '../deck';
 const CARD_KING = {name: CardsEmum.KING, values: [10]};
 const CARD_AS  = {name: CardsEmum.AS, values: [1, 11]};
 const CARD_SEVEN  = {name: CardsEmum.SEVEN, values: [7]};
+const CARD_THREE  = {name: CardsEmum.THREE, values: [3]};
 
 export class MockSequenceCardPicker implements ICardPicker {
   private idx_seq: number = 0;
@@ -171,3 +172,48 @@ test('BlackJack double should decrease the player balance', () => {
   expect(results.state).toBe(EngineState.PLAYING);
   expect(results.balance).toBe(100);
 });
+
+test('Blackjack dealer should win and take cards until over 16', () => {
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_THREE,
+  ]));
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .deal()
+
+  const { state, houseHand, balance }  = engine.action(BlackjackActions.STAND);
+
+  expect(state).toBe(EngineState.DONE);
+
+  expect(houseHand.cards).toHaveLength(6);
+  expect(houseHand.count).toStrictEqual([18]);
+  expect(balance).toBe(170); // player lost
+
+})
+
+test('Blackjack: player should win when dealer goes over 21', () => {
+  const engine = new BlackjackEngine(undefined, new MockSequenceCardPicker([
+    CARD_THREE, //dealer
+
+    CARD_KING, // p card 1
+    CARD_KING, // p card 2
+
+    CARD_KING, // dealer 13
+    CARD_KING, // dealer 23
+  ]));
+
+  engine
+    .deposit(200)
+    .placeBet(30)
+    .deal()
+
+  const { state, houseHand, balance }  = engine.action(BlackjackActions.STAND);
+
+  expect(state).toBe(EngineState.DONE);
+
+  expect(houseHand.cards).toHaveLength(3);
+  expect(houseHand.count).toStrictEqual([23]);
+  expect(balance).toBe(230); // player won
+})
