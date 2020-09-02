@@ -8,85 +8,6 @@ Array [
     "playerId": "112233",
     "winningSlots": Array [
       Object {
-        "color": 1,
-        "number": 2,
-      },
-      Object {
-        "color": 1,
-        "number": 4,
-      },
-      Object {
-        "color": 1,
-        "number": 6,
-      },
-      Object {
-        "color": 1,
-        "number": 8,
-      },
-      Object {
-        "color": 1,
-        "number": 10,
-      },
-      Object {
-        "color": 0,
-        "number": 12,
-      },
-      Object {
-        "color": 0,
-        "number": 14,
-      },
-      Object {
-        "color": 0,
-        "number": 16,
-      },
-      Object {
-        "color": 0,
-        "number": 18,
-      },
-      Object {
-        "color": 1,
-        "number": 20,
-      },
-      Object {
-        "color": 1,
-        "number": 22,
-      },
-      Object {
-        "color": 1,
-        "number": 24,
-      },
-      Object {
-        "color": 1,
-        "number": 26,
-      },
-      Object {
-        "color": 1,
-        "number": 28,
-      },
-      Object {
-        "color": 0,
-        "number": 30,
-      },
-      Object {
-        "color": 0,
-        "number": 32,
-      },
-      Object {
-        "color": 0,
-        "number": 34,
-      },
-      Object {
-        "color": 0,
-        "number": 36,
-      },
-    ],
-  },
-  Object {
-    "amount": 5,
-    "multiplier": 1,
-    "playerId": "112233",
-    "winningSlots": Array [
-      Object {
         "color": 0,
         "number": 1,
       },
@@ -157,6 +78,85 @@ Array [
       Object {
         "color": 1,
         "number": 35,
+      },
+    ],
+  },
+  Object {
+    "amount": 5,
+    "multiplier": 1,
+    "playerId": "112233",
+    "winningSlots": Array [
+      Object {
+        "color": 1,
+        "number": 2,
+      },
+      Object {
+        "color": 1,
+        "number": 4,
+      },
+      Object {
+        "color": 1,
+        "number": 6,
+      },
+      Object {
+        "color": 1,
+        "number": 8,
+      },
+      Object {
+        "color": 1,
+        "number": 10,
+      },
+      Object {
+        "color": 0,
+        "number": 12,
+      },
+      Object {
+        "color": 0,
+        "number": 14,
+      },
+      Object {
+        "color": 0,
+        "number": 16,
+      },
+      Object {
+        "color": 0,
+        "number": 18,
+      },
+      Object {
+        "color": 1,
+        "number": 20,
+      },
+      Object {
+        "color": 1,
+        "number": 22,
+      },
+      Object {
+        "color": 1,
+        "number": 24,
+      },
+      Object {
+        "color": 1,
+        "number": 26,
+      },
+      Object {
+        "color": 1,
+        "number": 28,
+      },
+      Object {
+        "color": 0,
+        "number": 30,
+      },
+      Object {
+        "color": 0,
+        "number": 32,
+      },
+      Object {
+        "color": 0,
+        "number": 34,
+      },
+      Object {
+        "color": 0,
+        "number": 36,
       },
     ],
   },

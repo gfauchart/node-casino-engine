@@ -66,6 +66,24 @@ test('Roulette Engine spin should return only 1 win when betting on odd, even an
   expect(lostBets).toHaveLength(2);
 });
 
+test('Roulette Engine should have winning Slots of 9 when placing bet on odd', () => {
+  const engine = new RouletteEngine();
+  const { bets } = engine
+    .registerPlayer({playerId, balance: 100 })
+    .placeBet(playerId, {type : SlotBetType.Odd, amount: 5})
+    .spin();
+    expect(bets[0].winningSlots.filter(({number}) => number === 9)).toHaveLength(1)
+});
+
+test('Roulette Engine should have winning Slots of 8 when placing bet on even', () => {
+  const engine = new RouletteEngine();
+  const { bets } = engine
+    .registerPlayer({playerId, balance: 100 })
+    .placeBet(playerId, {type : SlotBetType.Even, amount: 5})
+    .spin();
+    expect(bets[0].winningSlots.filter(({number}) => number === 8)).toHaveLength(1)
+});
+
 test('Roulette Engine spin should return only 1 win when betting on red, black and 0', () => {
   const engine = new RouletteEngine();
   const { bets } = engine

@@ -141,7 +141,7 @@ export default class RouletteEngine {
     } else if (bet.type === SlotBetType.Odd || bet.type === SlotBetType.Even) {
       winningSlots = Wheel
         .filter(w => w.number !== 0)
-        .filter(w => w.number % 2 === (bet.type === SlotBetType.Odd ? 0 : 1));
+        .filter(w => w.number % 2 === (bet.type === SlotBetType.Odd ? 1 : 0));
       multiplier = 1;
     } else {
       throw new Error(`invalid bet`);
